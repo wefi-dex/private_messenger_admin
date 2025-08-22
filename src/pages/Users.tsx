@@ -115,9 +115,9 @@ const Users: React.FC = () => {
   }
 
   const filteredUsers = usersArray.filter((user: User) => {
-    const matchesSearch = user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (user.phone && user.phone.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                         (user.alias && user.alias.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesSearch = user.username?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+                         (user.phone && user.phone?.toLowerCase().includes(searchTerm?.toLowerCase())) ||
+                         (user.alias && user.alias?.toLowerCase().includes(searchTerm?.toLowerCase()));
     const matchesRole = roleFilter === 'all' || user.role === roleFilter;
     return matchesSearch && matchesRole;
   });
