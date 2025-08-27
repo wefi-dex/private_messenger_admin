@@ -64,7 +64,7 @@ const CreatorApprovals: React.FC = () => {
       setSelectedCreator(null);
       await fetchPendingCreators(); // Refresh the list
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to approve creator");
+      setError(err.response?.data?.message || "Failed to approve Host");
     } finally {
       setApprovingId(null);
     }
@@ -79,7 +79,7 @@ const CreatorApprovals: React.FC = () => {
       setSelectedCreator(null);
       await fetchPendingCreators(); // Refresh the list
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to reject creator");
+      setError(err.response?.data?.message || "Failed to reject host");
     } finally {
       setRejectingId(null);
     }
@@ -112,9 +112,9 @@ const CreatorApprovals: React.FC = () => {
   return (
     <div className="p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Creator Approvals</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Host Approvals</h1>
         <p className="text-gray-600 mt-2">
-          Review and approve pending creator applications
+          Review and approve pending hosts applications
         </p>
       </div>
 
@@ -131,7 +131,7 @@ const CreatorApprovals: React.FC = () => {
             No pending approvals
           </h3>
           <p className="mt-1 text-sm text-gray-500">
-            All creator applications have been reviewed.
+            All hosts applications have been reviewed.
           </p>
         </div>
       ) : (
