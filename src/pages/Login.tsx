@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { 
-  EyeIcon, 
-  EyeSlashIcon, 
+import React, { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import {
+  EyeIcon,
+  EyeSlashIcon,
   ShieldCheckIcon,
   UserIcon,
   LockClosedIcon,
-  SparklesIcon
-} from '@heroicons/react/24/outline';
+  SparklesIcon,
+} from "@heroicons/react/24/outline";
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
       const success = await login(username, password);
       if (!success) {
-        setError('Invalid username or password');
+        setError("Invalid username or password");
       }
     } catch (err) {
-      setError('An error occurred during login');
+      setError("An error occurred during login");
     } finally {
       setIsLoading(false);
     }
@@ -44,7 +44,7 @@ const Login: React.FC = () => {
           <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
           <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
         </div>
-        
+
         {/* Content */}
         <div className="relative z-10 flex flex-col justify-center px-12 text-white">
           <div className="mb-8">
@@ -54,33 +54,37 @@ const Login: React.FC = () => {
               </div>
               <h1 className="ml-4 text-3xl font-bold">AdminPanel</h1>
             </div>
-            <h2 className="text-4xl font-bold mb-4">
-              Welcome Back
-            </h2>
+            <h2 className="text-4xl font-bold mb-4">Welcome Back</h2>
             <p className="text-xl text-primary-100 mb-8">
               Access your admin dashboard with secure authentication
             </p>
           </div>
-          
+
           {/* Feature List */}
           <div className="space-y-4">
             <div className="flex items-center">
               <div className="p-2 bg-white bg-opacity-20 rounded-lg">
                 <SparklesIcon className="h-5 w-5 text-white" />
               </div>
-              <span className="ml-3 text-primary-100">Advanced Analytics Dashboard</span>
+              <span className="ml-3 text-primary-100">
+                Advanced Analytics Dashboard
+              </span>
             </div>
             <div className="flex items-center">
               <div className="p-2 bg-white bg-opacity-20 rounded-lg">
                 <SparklesIcon className="h-5 w-5 text-white" />
               </div>
-              <span className="ml-3 text-primary-100">User Management System</span>
+              <span className="ml-3 text-primary-100">
+                User Management System
+              </span>
             </div>
             <div className="flex items-center">
               <div className="p-2 bg-white bg-opacity-20 rounded-lg">
                 <SparklesIcon className="h-5 w-5 text-white" />
               </div>
-              <span className="ml-3 text-primary-100">Real-time Reports & Insights</span>
+              <span className="ml-3 text-primary-100">
+                Real-time Reports & Insights
+              </span>
             </div>
           </div>
         </div>
@@ -110,7 +114,10 @@ const Login: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Username Field */}
               <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Username
                 </label>
                 <div className="relative">
@@ -132,7 +139,10 @@ const Login: React.FC = () => {
 
               {/* Password Field */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Password
                 </label>
                 <div className="relative">
@@ -142,7 +152,7 @@ const Login: React.FC = () => {
                   <input
                     id="password"
                     name="password"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     required
                     className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-500"
                     placeholder="Enter your password"
@@ -168,12 +178,22 @@ const Login: React.FC = () => {
                 <div className="rounded-xl bg-red-50 border border-red-200 p-4">
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                      <svg
+                        className="h-5 w-5 text-red-400"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </div>
                     <div className="ml-3">
-                      <h3 className="text-sm font-medium text-red-800">{error}</h3>
+                      <h3 className="text-sm font-medium text-red-800">
+                        {error}
+                      </h3>
                     </div>
                   </div>
                 </div>
@@ -207,10 +227,10 @@ const Login: React.FC = () => {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    Signing in...
+                    Signing in
                   </>
                 ) : (
-                  'Sign in to Dashboard'
+                  "Sign in to Dashboard"
                 )}
               </button>
             </form>
@@ -218,10 +238,16 @@ const Login: React.FC = () => {
             {/* Demo Credentials */}
             <div className="mt-8 p-4 bg-gray-50 rounded-xl border border-gray-200">
               <div className="text-center">
-                <p className="text-sm font-medium text-gray-700 mb-2">Demo Credentials</p>
+                <p className="text-sm font-medium text-gray-700 mb-2">
+                  Demo Credentials
+                </p>
                 <div className="text-xs text-gray-600 space-y-1">
-                  <p><span className="font-medium">Username:</span> admin</p>
-                  <p><span className="font-medium">Password:</span> admin123</p>
+                  <p>
+                    <span className="font-medium">Username:</span> admin
+                  </p>
+                  <p>
+                    <span className="font-medium">Password:</span> admin123
+                  </p>
                 </div>
               </div>
             </div>

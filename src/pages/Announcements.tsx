@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { 
+import React, { useState } from "react";
+import {
   PlusIcon,
   PencilIcon,
   TrashIcon,
@@ -11,17 +11,25 @@ import {
   BellIcon,
   MegaphoneIcon,
   CalendarIcon,
-  UserIcon
-} from '@heroicons/react/24/outline';
+  UserIcon,
+} from "@heroicons/react/24/outline";
 
 interface Announcement {
   id: string;
   title: string;
   content: string;
-  type: 'info' | 'warning' | 'success' | 'error' | 'update' | 'maintenance' | 'feature' | 'security';
-  priority: 'low' | 'medium' | 'high' | 'critical';
-  status: 'draft' | 'published' | 'archived';
-  target_audience: 'all' | 'creators' | 'fans' | 'admins';
+  type:
+    | "info"
+    | "warning"
+    | "success"
+    | "error"
+    | "update"
+    | "maintenance"
+    | "feature"
+    | "security";
+  priority: "low" | "medium" | "high" | "critical";
+  status: "draft" | "published" | "archived";
+  target_audience: "all" | "creators" | "fans" | "admins";
   start_date: string;
   end_date?: string;
   created_at: string;
@@ -32,11 +40,12 @@ interface Announcement {
 }
 
 const Announcements: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [typeFilter, setTypeFilter] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [priorityFilter, setPriorityFilter] = useState('all');
-  const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [priorityFilter, setPriorityFilter] = useState("all");
+  const [selectedAnnouncement, setSelectedAnnouncement] =
+    useState<Announcement | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -45,139 +54,176 @@ const Announcements: React.FC = () => {
   // Mock data for now - will be replaced with actual API calls
   const mockAnnouncements: Announcement[] = [
     {
-      id: '1',
-      title: 'System Maintenance Scheduled',
-      content: 'We will be performing scheduled maintenance on Sunday, December 15th from 2:00 AM to 6:00 AM EST. During this time, the platform will be temporarily unavailable.',
-      type: 'maintenance',
-      priority: 'high',
-      status: 'published',
-      target_audience: 'all',
-      start_date: '2024-12-15T02:00:00Z',
-      end_date: '2024-12-15T06:00:00Z',
-      created_at: '2024-12-10T10:00:00Z',
-      updated_at: '2024-12-10T10:00:00Z',
-      created_by: 'admin',
+      id: "1",
+      title: "System Maintenance Scheduled",
+      content:
+        "We will be performing scheduled maintenance on Sunday, December 15th from 2:00 AM to 6:00 AM EST. During this time, the platform will be temporarily unavailable.",
+      type: "maintenance",
+      priority: "high",
+      status: "published",
+      target_audience: "all",
+      start_date: "2024-12-15T02:00:00Z",
+      end_date: "2024-12-15T06:00:00Z",
+      created_at: "2024-12-10T10:00:00Z",
+      updated_at: "2024-12-10T10:00:00Z",
+      created_by: "admin",
       is_pinned: true,
-      read_count: 1250
+      read_count: 1250,
     },
     {
-      id: '2',
-      title: 'New Feature: Enhanced Messaging',
-      content: 'We\'re excited to announce our new enhanced messaging feature! Now you can send voice messages, create group chats, and use emoji reactions.',
-      type: 'feature',
-      priority: 'medium',
-      status: 'published',
-      target_audience: 'all',
-      start_date: '2024-12-12T00:00:00Z',
-      created_at: '2024-12-12T09:00:00Z',
-      updated_at: '2024-12-12T09:00:00Z',
-      created_by: 'admin',
+      id: "2",
+      title: "New Feature: Enhanced Messaging",
+      content:
+        "We're excited to announce our new enhanced messaging feature! Now you can send voice messages, create group chats, and use emoji reactions.",
+      type: "feature",
+      priority: "medium",
+      status: "published",
+      target_audience: "all",
+      start_date: "2024-12-12T00:00:00Z",
+      created_at: "2024-12-12T09:00:00Z",
+      updated_at: "2024-12-12T09:00:00Z",
+      created_by: "admin",
       is_pinned: false,
-      read_count: 890
+      read_count: 890,
     },
     {
-      id: '3',
-      title: 'Security Update Required',
-      content: 'Important: Please update your password to ensure account security. We recommend using a strong password with at least 8 characters.',
-      type: 'security',
-      priority: 'critical',
-      status: 'published',
-      target_audience: 'all',
-      start_date: '2024-12-11T00:00:00Z',
-      created_at: '2024-12-11T14:30:00Z',
-      updated_at: '2024-12-11T14:30:00Z',
-      created_by: 'admin',
+      id: "3",
+      title: "Security Update Required",
+      content:
+        "Important: Please update your password to ensure account security. We recommend using a strong password with at least 8 characters.",
+      type: "security",
+      priority: "critical",
+      status: "published",
+      target_audience: "all",
+      start_date: "2024-12-11T00:00:00Z",
+      created_at: "2024-12-11T14:30:00Z",
+      updated_at: "2024-12-11T14:30:00Z",
+      created_by: "admin",
       is_pinned: true,
-      read_count: 2100
+      read_count: 2100,
     },
     {
-      id: '4',
-      title: 'Creator Guidelines Updated',
-      content: 'We\'ve updated our creator guidelines to ensure a better experience for everyone. Please review the new guidelines in your creator dashboard.',
-      type: 'info',
-      priority: 'medium',
-      status: 'published',
-      target_audience: 'creators',
-      start_date: '2024-12-10T00:00:00Z',
-      created_at: '2024-12-10T11:15:00Z',
-      updated_at: '2024-12-10T11:15:00Z',
-      created_by: 'admin',
+      id: "4",
+      title: "Creator Guidelines Updated",
+      content:
+        "We've updated our creator guidelines to ensure a better experience for everyone. Please review the new guidelines in your creator dashboard.",
+      type: "info",
+      priority: "medium",
+      status: "published",
+      target_audience: "creators",
+      start_date: "2024-12-10T00:00:00Z",
+      created_at: "2024-12-10T11:15:00Z",
+      updated_at: "2024-12-10T11:15:00Z",
+      created_by: "admin",
       is_pinned: false,
-      read_count: 450
+      read_count: 450,
     },
     {
-      id: '5',
-      title: 'Holiday Schedule Notice',
-      content: 'Our support team will have reduced hours during the holiday season. Response times may be longer than usual.',
-      type: 'warning',
-      priority: 'low',
-      status: 'published',
-      target_audience: 'all',
-      start_date: '2024-12-20T00:00:00Z',
-      end_date: '2025-01-05T00:00:00Z',
-      created_at: '2024-12-09T16:45:00Z',
-      updated_at: '2024-12-09T16:45:00Z',
-      created_by: 'admin',
+      id: "5",
+      title: "Holiday Schedule Notice",
+      content:
+        "Our support team will have reduced hours during the holiday season. Response times may be longer than usual.",
+      type: "warning",
+      priority: "low",
+      status: "published",
+      target_audience: "all",
+      start_date: "2024-12-20T00:00:00Z",
+      end_date: "2025-01-05T00:00:00Z",
+      created_at: "2024-12-09T16:45:00Z",
+      updated_at: "2024-12-09T16:45:00Z",
+      created_by: "admin",
       is_pinned: false,
-      read_count: 320
-    }
+      read_count: 320,
+    },
   ];
 
-  const [announcements, setAnnouncements] = useState<Announcement[]>(mockAnnouncements);
+  const [announcements, setAnnouncements] =
+    useState<Announcement[]>(mockAnnouncements);
 
   const filteredAnnouncements = announcements.filter((announcement) => {
-    const matchesSearch = announcement.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         announcement.content.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = typeFilter === 'all' || announcement.type === typeFilter;
-    const matchesStatus = statusFilter === 'all' || announcement.status === statusFilter;
-    const matchesPriority = priorityFilter === 'all' || announcement.priority === priorityFilter;
+    const matchesSearch =
+      announcement.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      announcement.content.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesType =
+      typeFilter === "all" || announcement.type === typeFilter;
+    const matchesStatus =
+      statusFilter === "all" || announcement.status === statusFilter;
+    const matchesPriority =
+      priorityFilter === "all" || announcement.priority === priorityFilter;
     return matchesSearch && matchesType && matchesStatus && matchesPriority;
   });
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'info': return InformationCircleIcon;
-      case 'warning': return ExclamationTriangleIcon;
-      case 'success': return CheckCircleIcon;
-      case 'error': return XCircleIcon;
-      case 'update': return BellIcon;
-      case 'maintenance': return ExclamationTriangleIcon;
-      case 'feature': return BellIcon;
-      case 'security': return XCircleIcon;
-      default: return MegaphoneIcon;
+      case "info":
+        return InformationCircleIcon;
+      case "warning":
+        return ExclamationTriangleIcon;
+      case "success":
+        return CheckCircleIcon;
+      case "error":
+        return XCircleIcon;
+      case "update":
+        return BellIcon;
+      case "maintenance":
+        return ExclamationTriangleIcon;
+      case "feature":
+        return BellIcon;
+      case "security":
+        return XCircleIcon;
+      default:
+        return MegaphoneIcon;
     }
   };
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'info': return 'bg-blue-100 text-blue-800';
-      case 'warning': return 'bg-yellow-100 text-yellow-800';
-      case 'success': return 'bg-green-100 text-green-800';
-      case 'error': return 'bg-red-100 text-red-800';
-      case 'update': return 'bg-purple-100 text-purple-800';
-      case 'maintenance': return 'bg-orange-100 text-orange-800';
-      case 'feature': return 'bg-indigo-100 text-indigo-800';
-      case 'security': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "info":
+        return "bg-blue-100 text-blue-800";
+      case "warning":
+        return "bg-yellow-100 text-yellow-800";
+      case "success":
+        return "bg-green-100 text-green-800";
+      case "error":
+        return "bg-red-100 text-red-800";
+      case "update":
+        return "bg-purple-100 text-purple-800";
+      case "maintenance":
+        return "bg-orange-100 text-orange-800";
+      case "feature":
+        return "bg-indigo-100 text-indigo-800";
+      case "security":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'low': return 'bg-gray-100 text-gray-800';
-      case 'medium': return 'bg-blue-100 text-blue-800';
-      case 'high': return 'bg-orange-100 text-orange-800';
-      case 'critical': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "low":
+        return "bg-gray-100 text-gray-800";
+      case "medium":
+        return "bg-blue-100 text-blue-800";
+      case "high":
+        return "bg-orange-100 text-orange-800";
+      case "critical":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'draft': return 'bg-gray-100 text-gray-800';
-      case 'published': return 'bg-green-100 text-green-800';
-      case 'archived': return 'bg-yellow-100 text-yellow-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "draft":
+        return "bg-gray-100 text-gray-800";
+      case "published":
+        return "bg-green-100 text-green-800";
+      case "archived":
+        return "bg-yellow-100 text-yellow-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
@@ -187,8 +233,8 @@ const Announcements: React.FC = () => {
       ...formData,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-      created_by: 'admin',
-      read_count: 0
+      created_by: "admin",
+      read_count: 0,
     };
     setAnnouncements([newAnnouncement, ...announcements]);
     setShowCreateModal(false);
@@ -196,9 +242,13 @@ const Announcements: React.FC = () => {
 
   const handleUpdateAnnouncement = (formData: any) => {
     if (selectedAnnouncement) {
-      const updatedAnnouncements = announcements.map(announcement =>
+      const updatedAnnouncements = announcements.map((announcement) =>
         announcement.id === selectedAnnouncement.id
-          ? { ...announcement, ...formData, updated_at: new Date().toISOString() }
+          ? {
+              ...announcement,
+              ...formData,
+              updated_at: new Date().toISOString(),
+            }
           : announcement
       );
       setAnnouncements(updatedAnnouncements);
@@ -210,7 +260,7 @@ const Announcements: React.FC = () => {
   const handleDeleteAnnouncement = () => {
     if (selectedAnnouncement) {
       const updatedAnnouncements = announcements.filter(
-        announcement => announcement.id !== selectedAnnouncement.id
+        (announcement) => announcement.id !== selectedAnnouncement.id
       );
       setAnnouncements(updatedAnnouncements);
       setShowDeleteModal(false);
@@ -219,7 +269,7 @@ const Announcements: React.FC = () => {
   };
 
   const handleTogglePin = (id: string) => {
-    const updatedAnnouncements = announcements.map(announcement =>
+    const updatedAnnouncements = announcements.map((announcement) =>
       announcement.id === id
         ? { ...announcement, is_pinned: !announcement.is_pinned }
         : announcement
@@ -232,7 +282,9 @@ const Announcements: React.FC = () => {
       {/* Header */}
       <div className="sm:flex sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Announcements</h1>
+          <h1 className="text-2xl font-semibold text-gray-900">
+            Announcements
+          </h1>
           <p className="mt-1 text-sm text-gray-500">
             Manage system announcements and notifications
           </p>
@@ -315,10 +367,10 @@ const Announcements: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => {
-                  setSearchTerm('');
-                  setTypeFilter('all');
-                  setStatusFilter('all');
-                  setPriorityFilter('all');
+                  setSearchTerm("");
+                  setTypeFilter("all");
+                  setStatusFilter("all");
+                  setPriorityFilter("all");
                 }}
                 className="w-full px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
               >
@@ -334,9 +386,13 @@ const Announcements: React.FC = () => {
         {filteredAnnouncements.length === 0 ? (
           <div className="text-center py-12">
             <MegaphoneIcon className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">No announcements found</h3>
+            <h3 className="mt-2 text-sm font-medium text-gray-900">
+              No announcements found
+            </h3>
             <p className="mt-1 text-sm text-gray-500">
-              {announcements.length === 0 ? 'No announcements in the system.' : 'No announcements match your search criteria.'}
+              {announcements.length === 0
+                ? "No announcements in the system."
+                : "No announcements match your search criteria."}
             </p>
           </div>
         ) : (
@@ -356,7 +412,9 @@ const Announcements: React.FC = () => {
                         <div className="ml-4 flex-1">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-2">
-                              <p className="text-sm font-medium text-gray-900">{announcement.title}</p>
+                              <p className="text-sm font-medium text-gray-900">
+                                {announcement.title}
+                              </p>
                               {announcement.is_pinned && (
                                 <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
                                   Pinned
@@ -364,13 +422,25 @@ const Announcements: React.FC = () => {
                               )}
                             </div>
                             <div className="flex items-center space-x-2">
-                              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(announcement.type)}`}>
+                              <span
+                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(
+                                  announcement.type
+                                )}`}
+                              >
                                 {announcement.type}
                               </span>
-                              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getPriorityColor(announcement.priority)}`}>
+                              <span
+                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getPriorityColor(
+                                  announcement.priority
+                                )}`}
+                              >
                                 {announcement.priority}
                               </span>
-                              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(announcement.status)}`}>
+                              <span
+                                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(
+                                  announcement.status
+                                )}`}
+                              >
                                 {announcement.status}
                               </span>
                             </div>
@@ -381,7 +451,9 @@ const Announcements: React.FC = () => {
                           <div className="flex items-center space-x-4 mt-2 text-xs text-gray-400">
                             <span className="flex items-center">
                               <CalendarIcon className="h-3 w-3 mr-1" />
-                              {new Date(announcement.start_date).toLocaleDateString()}
+                              {new Date(
+                                announcement.start_date
+                              ).toLocaleDateString()}
                             </span>
                             <span className="flex items-center">
                               <UserIcon className="h-3 w-3 mr-1" />
@@ -407,8 +479,12 @@ const Announcements: React.FC = () => {
                         </button>
                         <button
                           onClick={() => handleTogglePin(announcement.id)}
-                          className={`${announcement.is_pinned ? 'text-yellow-400 hover:text-yellow-500' : 'text-gray-400 hover:text-gray-500'}`}
-                          title={announcement.is_pinned ? 'Unpin' : 'Pin'}
+                          className={`${
+                            announcement.is_pinned
+                              ? "text-yellow-400 hover:text-yellow-500"
+                              : "text-gray-400 hover:text-gray-500"
+                          }`}
+                          title={announcement.is_pinned ? "Unpin" : "Pin"}
                         >
                           <BellIcon className="h-5 w-5" />
                         </button>
@@ -497,17 +573,21 @@ interface CreateAnnouncementModalProps {
   onSubmit: (data: any) => void;
 }
 
-const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = ({ isOpen, onClose, onSubmit }) => {
+const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+}) => {
   const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    type: 'info' as Announcement['type'],
-    priority: 'medium' as Announcement['priority'],
-    status: 'draft' as Announcement['status'],
-    target_audience: 'all' as Announcement['target_audience'],
-    start_date: new Date().toISOString().split('T')[0],
-    end_date: '',
-    is_pinned: false
+    title: "",
+    content: "",
+    type: "info" as Announcement["type"],
+    priority: "medium" as Announcement["priority"],
+    status: "draft" as Announcement["status"],
+    target_audience: "all" as Announcement["target_audience"],
+    start_date: new Date().toISOString().split("T")[0],
+    end_date: "",
+    is_pinned: false,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -521,35 +601,52 @@ const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = ({ isOpe
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div className="mt-3">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Create New Announcement</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            Create New Announcement
+          </h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Title</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Title
+              </label>
               <input
                 type="text"
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                 value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, title: e.target.value })
+                }
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Content</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Content
+              </label>
               <textarea
                 required
                 rows={4}
                 className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                 value={formData.content}
-                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, content: e.target.value })
+                }
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Type</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Type
+                </label>
                 <select
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.type}
-                  onChange={(e) => setFormData({ ...formData, type: e.target.value as Announcement['type'] })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      type: e.target.value as Announcement["type"],
+                    })
+                  }
                 >
                   <option value="info">Information</option>
                   <option value="warning">Warning</option>
@@ -562,11 +659,18 @@ const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = ({ isOpe
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Priority</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Priority
+                </label>
                 <select
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.priority}
-                  onChange={(e) => setFormData({ ...formData, priority: e.target.value as Announcement['priority'] })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      priority: e.target.value as Announcement["priority"],
+                    })
+                  }
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -577,11 +681,18 @@ const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = ({ isOpe
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Status</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Status
+                </label>
                 <select
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.status}
-                  onChange={(e) => setFormData({ ...formData, status: e.target.value as Announcement['status'] })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      status: e.target.value as Announcement["status"],
+                    })
+                  }
                 >
                   <option value="draft">Draft</option>
                   <option value="published">Published</option>
@@ -589,37 +700,53 @@ const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = ({ isOpe
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Target Audience</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Target Audience
+                </label>
                 <select
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.target_audience}
-                  onChange={(e) => setFormData({ ...formData, target_audience: e.target.value as Announcement['target_audience'] })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      target_audience: e.target
+                        .value as Announcement["target_audience"],
+                    })
+                  }
                 >
                   <option value="all">All Users</option>
-                  <option value="creators">Creators Only</option>
-                  <option value="fans">Fans Only</option>
+                  <option value="creators">Hosts Only</option>
+                  <option value="fans">Guests Only</option>
                   <option value="admins">Admins Only</option>
                 </select>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Start Date</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Start Date
+                </label>
                 <input
                   type="date"
                   required
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.start_date}
-                  onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, start_date: e.target.value })
+                  }
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">End Date (Optional)</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  End Date (Optional)
+                </label>
                 <input
                   type="date"
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.end_date}
-                  onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, end_date: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -629,9 +756,14 @@ const CreateAnnouncementModal: React.FC<CreateAnnouncementModalProps> = ({ isOpe
                 id="is_pinned"
                 className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                 checked={formData.is_pinned}
-                onChange={(e) => setFormData({ ...formData, is_pinned: e.target.checked })}
+                onChange={(e) =>
+                  setFormData({ ...formData, is_pinned: e.target.checked })
+                }
               />
-              <label htmlFor="is_pinned" className="ml-2 block text-sm text-gray-900">
+              <label
+                htmlFor="is_pinned"
+                className="ml-2 block text-sm text-gray-900"
+              >
                 Pin this announcement
               </label>
             </div>
@@ -664,7 +796,12 @@ interface EditAnnouncementModalProps {
   announcement: Announcement;
 }
 
-const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({ isOpen, onClose, onSubmit, announcement }) => {
+const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  announcement,
+}) => {
   const [formData, setFormData] = useState({
     title: announcement.title,
     content: announcement.content,
@@ -672,9 +809,9 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({ isOpen, o
     priority: announcement.priority,
     status: announcement.status,
     target_audience: announcement.target_audience,
-    start_date: announcement.start_date.split('T')[0],
-    end_date: announcement.end_date?.split('T')[0] || '',
-    is_pinned: announcement.is_pinned
+    start_date: announcement.start_date.split("T")[0],
+    end_date: announcement.end_date?.split("T")[0] || "",
+    is_pinned: announcement.is_pinned,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -688,35 +825,52 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({ isOpen, o
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div className="mt-3">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Edit Announcement</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            Edit Announcement
+          </h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Title</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Title
+              </label>
               <input
                 type="text"
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                 value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, title: e.target.value })
+                }
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Content</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Content
+              </label>
               <textarea
                 required
                 rows={4}
                 className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                 value={formData.content}
-                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, content: e.target.value })
+                }
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Type</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Type
+                </label>
                 <select
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.type}
-                  onChange={(e) => setFormData({ ...formData, type: e.target.value as Announcement['type'] })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      type: e.target.value as Announcement["type"],
+                    })
+                  }
                 >
                   <option value="info">Information</option>
                   <option value="warning">Warning</option>
@@ -729,11 +883,18 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({ isOpen, o
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Priority</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Priority
+                </label>
                 <select
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.priority}
-                  onChange={(e) => setFormData({ ...formData, priority: e.target.value as Announcement['priority'] })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      priority: e.target.value as Announcement["priority"],
+                    })
+                  }
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -744,11 +905,18 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({ isOpen, o
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Status</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Status
+                </label>
                 <select
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.status}
-                  onChange={(e) => setFormData({ ...formData, status: e.target.value as Announcement['status'] })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      status: e.target.value as Announcement["status"],
+                    })
+                  }
                 >
                   <option value="draft">Draft</option>
                   <option value="published">Published</option>
@@ -756,37 +924,53 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({ isOpen, o
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Target Audience</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Target Audience
+                </label>
                 <select
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.target_audience}
-                  onChange={(e) => setFormData({ ...formData, target_audience: e.target.value as Announcement['target_audience'] })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      target_audience: e.target
+                        .value as Announcement["target_audience"],
+                    })
+                  }
                 >
                   <option value="all">All Users</option>
-                  <option value="creators">Creators Only</option>
-                  <option value="fans">Fans Only</option>
+                  <option value="creators">Hosts Only</option>
+                  <option value="fans">Guests Only</option>
                   <option value="admins">Admins Only</option>
                 </select>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Start Date</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Start Date
+                </label>
                 <input
                   type="date"
                   required
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.start_date}
-                  onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, start_date: e.target.value })
+                  }
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">End Date (Optional)</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  End Date (Optional)
+                </label>
                 <input
                   type="date"
                   className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                   value={formData.end_date}
-                  onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, end_date: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -796,9 +980,14 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({ isOpen, o
                 id="is_pinned_edit"
                 className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                 checked={formData.is_pinned}
-                onChange={(e) => setFormData({ ...formData, is_pinned: e.target.checked })}
+                onChange={(e) =>
+                  setFormData({ ...formData, is_pinned: e.target.checked })
+                }
               />
-              <label htmlFor="is_pinned_edit" className="ml-2 block text-sm text-gray-900">
+              <label
+                htmlFor="is_pinned_edit"
+                className="ml-2 block text-sm text-gray-900"
+              >
                 Pin this announcement
               </label>
             </div>
@@ -830,62 +1019,106 @@ interface ViewAnnouncementModalProps {
   announcement: Announcement;
 }
 
-const ViewAnnouncementModal: React.FC<ViewAnnouncementModalProps> = ({ isOpen, onClose, announcement }) => {
+const ViewAnnouncementModal: React.FC<ViewAnnouncementModalProps> = ({
+  isOpen,
+  onClose,
+  announcement,
+}) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div className="mt-3">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Announcement Details</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            Announcement Details
+          </h3>
           <div className="space-y-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Title</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Title
+              </label>
               <p className="mt-1 text-sm text-gray-900">{announcement.title}</p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Content</label>
-              <p className="mt-1 text-sm text-gray-900 whitespace-pre-wrap">{announcement.content}</p>
+              <label className="block text-sm font-medium text-gray-700">
+                Content
+              </label>
+              <p className="mt-1 text-sm text-gray-900 whitespace-pre-wrap">
+                {announcement.content}
+              </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Type</label>
-                <p className="mt-1 text-sm text-gray-900 capitalize">{announcement.type}</p>
+                <label className="block text-sm font-medium text-gray-700">
+                  Type
+                </label>
+                <p className="mt-1 text-sm text-gray-900 capitalize">
+                  {announcement.type}
+                </p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Priority</label>
-                <p className="mt-1 text-sm text-gray-900 capitalize">{announcement.priority}</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Status</label>
-                <p className="mt-1 text-sm text-gray-900 capitalize">{announcement.status}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Target Audience</label>
-                <p className="mt-1 text-sm text-gray-900 capitalize">{announcement.target_audience}</p>
+                <label className="block text-sm font-medium text-gray-700">
+                  Priority
+                </label>
+                <p className="mt-1 text-sm text-gray-900 capitalize">
+                  {announcement.priority}
+                </p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Start Date</label>
-                <p className="mt-1 text-sm text-gray-900">{new Date(announcement.start_date).toLocaleDateString()}</p>
+                <label className="block text-sm font-medium text-gray-700">
+                  Status
+                </label>
+                <p className="mt-1 text-sm text-gray-900 capitalize">
+                  {announcement.status}
+                </p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">End Date</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Target Audience
+                </label>
+                <p className="mt-1 text-sm text-gray-900 capitalize">
+                  {announcement.target_audience}
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Start Date
+                </label>
                 <p className="mt-1 text-sm text-gray-900">
-                  {announcement.end_date ? new Date(announcement.end_date).toLocaleDateString() : 'No end date'}
+                  {new Date(announcement.start_date).toLocaleDateString()}
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  End Date
+                </label>
+                <p className="mt-1 text-sm text-gray-900">
+                  {announcement.end_date
+                    ? new Date(announcement.end_date).toLocaleDateString()
+                    : "No end date"}
                 </p>
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Read Count</label>
-              <p className="mt-1 text-sm text-gray-900">{announcement.read_count}</p>
+              <label className="block text-sm font-medium text-gray-700">
+                Read Count
+              </label>
+              <p className="mt-1 text-sm text-gray-900">
+                {announcement.read_count}
+              </p>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Created</label>
-              <p className="mt-1 text-sm text-gray-900">{new Date(announcement.created_at).toLocaleString()}</p>
+              <label className="block text-sm font-medium text-gray-700">
+                Created
+              </label>
+              <p className="mt-1 text-sm text-gray-900">
+                {new Date(announcement.created_at).toLocaleString()}
+              </p>
             </div>
           </div>
           <div className="mt-6 flex justify-end">
@@ -909,16 +1142,24 @@ interface DeleteAnnouncementModalProps {
   announcement: Announcement;
 }
 
-const DeleteAnnouncementModal: React.FC<DeleteAnnouncementModalProps> = ({ isOpen, onClose, onConfirm, announcement }) => {
+const DeleteAnnouncementModal: React.FC<DeleteAnnouncementModalProps> = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  announcement,
+}) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div className="mt-3">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Delete Announcement</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            Delete Announcement
+          </h3>
           <p className="text-sm text-gray-500 mb-4">
-            Are you sure you want to delete "{announcement.title}"? This action cannot be undone.
+            Are you sure you want to delete "{announcement.title}"? This action
+            cannot be undone.
           </p>
           <div className="flex justify-end space-x-3">
             <button
@@ -940,4 +1181,4 @@ const DeleteAnnouncementModal: React.FC<DeleteAnnouncementModalProps> = ({ isOpe
   );
 };
 
-export default Announcements; 
+export default Announcements;

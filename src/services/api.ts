@@ -1,17 +1,18 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:8000/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 // Request interceptor to add auth token
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('admin_token');
+  const token = localStorage.getItem("admin_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -23,9 +24,9 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('admin_token');
-      localStorage.removeItem('admin_user');
-      window.location.href = '/login';
+      localStorage.removeItem("admin_token");
+      localStorage.removeItem("admin_user");
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }
@@ -33,7 +34,7 @@ api.interceptors.response.use(
 
 // User management
 export const userApi = {
-  getAllUsers: () => api.get('/admin/users'),
+  getAllUsers: () => api.get("/admin/users"),
   getUser: (id: string) => api.get(`/user/${id}`),
   updateUser: (id: string, data: any) => api.put(`/user/${id}`, data),
   deleteUser: (id: string) => api.delete(`/admin/users/${id}`),
@@ -43,28 +44,36 @@ export const userApi = {
   getUserReports: (userId: string) => api.get(`/user/${userId}/reports`),
 };
 
+// Creator approval management
+export const creatorApi = {
+  getPendingCreators: () => api.get("/admin/creators/pending"),
+  approveCreator: (id: string, approved: boolean, notes?: string) =>
+    api.post(`/admin/creators/${id}/approve`, { approved, notes }),
+};
+
 // Report management
 export const reportApi = {
-  getAllReports: () => api.get('/reports'),
+  getAllReports: () => api.get("/reports"),
   getReport: (id: string) => api.get(`/report/${id}`),
-  updateReportStatus: (id: string, status: string) => api.put(`/report/${id}`, { status }),
+  updateReportStatus: (id: string, status: string) =>
+    api.put(`/report/${id}`, { status }),
   deleteReport: (id: string) => api.delete(`/report/${id}`),
 };
 
 // Analytics
 export const analyticsApi = {
-  getDashboardStats: () => api.get('/analytics/dashboard'),
-  getUserStats: () => api.get('/analytics/users'),
-  getReportStats: () => api.get('/analytics/reports'),
+  getDashboardStats: () => api.get("/analytics/dashboard"),
+  getUserStats: () => api.get("/analytics/users"),
+  getReportStats: () => api.get("/analytics/reports"),
 };
 
 // Block management
 export const blockApi = {
-  blockUser: (blockerId: string, blockedId: string) => 
-    api.post('/block', { blocker_id: blockerId, blocked_id: blockedId }),
-  unblockUser: (blockerId: string, blockedId: string) => 
-    api.post('/unblock', { blocker_id: blockerId, blocked_id: blockedId }),
-  getBlockStatus: (userId: string, targetUserId: string) => 
+  blockUser: (blockerId: string, blockedId: string) =>
+    api.post("/block", { blocker_id: blockerId, blocked_id: blockedId }),
+  unblockUser: (blockerId: string, blockedId: string) =>
+    api.post("/unblock", { blocker_id: blockerId, blocked_id: blockedId }),
+  getBlockStatus: (userId: string, targetUserId: string) =>
     api.get(`/block-status?user_id=${userId}&target_user_id=${targetUserId}`),
 };
 
