@@ -35,7 +35,7 @@ const navigation = [
     name: "Creator Approvals",
     href: "/creator-approvals",
     icon: CheckCircleIcon,
-    description: "Review creator applications",
+    description: "Review host applications",
   },
   {
     name: "Reports",
