@@ -3,7 +3,6 @@ import { useQuery } from "react-query";
 import {
   UsersIcon,
   FlagIcon,
-  ChatBubbleLeftRightIcon,
   ExclamationTriangleIcon,
   ArrowUpIcon,
   ArrowDownIcon,
@@ -37,8 +36,8 @@ const Dashboard: React.FC = () => {
     isLoading: analyticsLoading,
     error: analyticsError,
   } = useQuery("analytics", analyticsApi.getDashboardStats);
-  const { data: pendingCreators, isLoading: creatorsLoading } = useQuery(
-    "pendingCreators",
+  const { data: pendingCreators } = useQuery(
+    "pendingHosts",
     creatorApi.getPendingCreators
   );
 
@@ -151,7 +150,7 @@ const Dashboard: React.FC = () => {
       bgGradient: "from-blue-50 to-blue-100",
     },
     {
-      name: "Pending Creators",
+      name: "Pending Hosts",
       value: pendingCreatorsCount,
       icon: CheckCircleIcon,
       change: pendingCreatorsCount > 0 ? `+${pendingCreatorsCount}` : "0",
