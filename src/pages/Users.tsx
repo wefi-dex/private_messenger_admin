@@ -16,8 +16,6 @@ import {
   UserGroupIcon,
   ChartBarIcon,
   ClockIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
   EnvelopeIcon,
   CheckBadgeIcon,
   XMarkIcon,
@@ -169,16 +167,9 @@ const Users: React.FC = () => {
   // Calculate statistics
   const totalUsers = usersArray.length;
   const activeUsers = usersArray.filter((user) => !user.banned).length;
-  const bannedUsers = usersArray.filter((user) => user.banned).length;
-  const creators = usersArray.filter((user) => user.role === "creator").length;
-  const fans = usersArray.filter((user) => user.role === "fan").length;
+
   const verifiedUsers = usersArray.filter((user) => user.email_verified).length;
-  const unverifiedUsers = usersArray.filter(
-    (user) => !user.email_verified
-  ).length;
-  const approvedCreators = usersArray.filter(
-    (user) => user.role === "creator" && user.creator_approved
-  ).length;
+
   const pendingCreators = usersArray.filter(
     (user) => user.role === "creator" && !user.creator_approved
   ).length;
@@ -206,7 +197,7 @@ const Users: React.FC = () => {
       bgGradient: "from-emerald-50 to-emerald-100",
     },
     {
-      name: "Pending Creators",
+      name: "Pending Hosts",
       value: pendingCreators,
       icon: ClockIcon,
       gradient: "from-orange-500 to-orange-600",
@@ -366,8 +357,8 @@ const Users: React.FC = () => {
               onChange={(e) => setRoleFilter(e.target.value)}
             >
               <option value="all">All Roles</option>
-              <option value="creator">Creators</option>
-              <option value="fan">Fans</option>
+              <option value="creator">Hosts</option>
+              <option value="fan">Guests</option>
             </select>
           </div>
 
@@ -397,9 +388,9 @@ const Users: React.FC = () => {
               value={creatorFilter}
               onChange={(e) => setCreatorFilter(e.target.value)}
             >
-              <option value="all">All Creator Status</option>
-              <option value="approved">Approved Creators</option>
-              <option value="pending">Pending Creators</option>
+              <option value="all">All Hosts Status</option>
+              <option value="approved">Approved Hosts</option>
+              <option value="pending">Pending Hosts</option>
             </select>
           </div>
         </div>
@@ -543,7 +534,7 @@ const Users: React.FC = () => {
                         }
                       >
                         {user.creator_approved
-                          ? "Approved Creator"
+                          ? "Approved Host"
                           : "Pending Approval"}
                       </span>
                     </div>
@@ -765,7 +756,7 @@ const Users: React.FC = () => {
                 {selectedUser.role === "creator" && (
                   <div className="p-3 bg-yellow-50 rounded-xl">
                     <p className="text-xs font-medium text-yellow-600 uppercase tracking-wide">
-                      Creator Status
+                      Host Status
                     </p>
                     <div className="flex items-center mt-1">
                       {selectedUser.creator_approved ? (
