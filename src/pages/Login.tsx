@@ -24,11 +24,17 @@ const Login: React.FC = () => {
 
     try {
       const success = await login(username, password);
+
       if (!success) {
-        setError("Invalid username or password");
+        setError(
+          "Invalid username or password. Please try 'admin' / 'admin123'"
+        );
       }
-    } catch (err) {
-      setError("An error occurred during login");
+    } catch (err: any) {
+      setError(
+        err.message ||
+          "An error occurred during login. Please check your connection."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -84,6 +90,14 @@ const Login: React.FC = () => {
               </div>
               <span className="ml-3 text-primary-100">
                 Real-time Reports & Insights
+              </span>
+            </div>
+            <div className="flex items-center">
+              <div className="p-2 bg-white bg-opacity-20 rounded-lg">
+                <SparklesIcon className="h-5 w-5 text-white" />
+              </div>
+              <span className="ml-3 text-primary-100">
+                Subscription Management
               </span>
             </div>
           </div>
@@ -235,18 +249,18 @@ const Login: React.FC = () => {
               </button>
             </form>
 
-            {/* Demo Credentials */}
-            <div className="mt-8 p-4 bg-gray-50 rounded-xl border border-gray-200">
+            {/* Simple Login Info */}
+            <div className="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
               <div className="text-center">
                 <p className="text-sm font-medium text-gray-700 mb-2">
-                  Demo Credentials
+                  Login Credentials
                 </p>
-                <div className="text-xs text-gray-600 space-y-1">
+                <div className="text-xs text-gray-600">
                   <p>
-                    <span className="font-medium">Username:</span> admin
+                    <strong>Username:</strong> admin
                   </p>
                   <p>
-                    <span className="font-medium">Password:</span> admin123
+                    <strong>Password:</strong> admin123
                   </p>
                 </div>
               </div>
