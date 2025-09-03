@@ -8,13 +8,12 @@ import {
   XMarkIcon,
   SpeakerWaveIcon,
   ArrowRightOnRectangleIcon,
-  BellIcon,
   Cog6ToothIcon,
   UserCircleIcon,
   ChevronDownIcon,
-  SparklesIcon,
   ShieldCheckIcon,
   CheckCircleIcon,
+  CreditCardIcon,
 } from "@heroicons/react/24/outline";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -48,6 +47,12 @@ const navigation = [
     href: "/announcement",
     icon: SpeakerWaveIcon,
     description: "Create announcements",
+  },
+  {
+    name: "Subscriptions",
+    href: "/subscriptions",
+    icon: CreditCardIcon,
+    description: "Manage subscriptions",
   },
 ];
 
