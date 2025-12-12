@@ -9,12 +9,10 @@ import {
   UserIcon,
   CheckCircleIcon,
   XCircleIcon,
-  PlusIcon,
   CalendarIcon,
   PhoneIcon,
   ShieldCheckIcon,
   UserGroupIcon,
-  ChartBarIcon,
   ClockIcon,
   EnvelopeIcon,
   CheckBadgeIcon,
@@ -72,7 +70,6 @@ const Users: React.FC = () => {
         setSelectedUser(null);
       },
       onError: (error: any) => {
-        console.error("Error deleting user:", error);
         alert(
           `Failed to delete user: ${
             error.response?.data?.message || error.message || "Unknown error"
@@ -89,7 +86,6 @@ const Users: React.FC = () => {
         queryClient.invalidateQueries("users");
       },
       onError: (error: any) => {
-        console.error("Error banning user:", error);
         alert(
           `Failed to ban user: ${
             error.response?.data?.message || error.message || "Unknown error"
@@ -106,7 +102,6 @@ const Users: React.FC = () => {
         queryClient.invalidateQueries("users");
       },
       onError: (error: any) => {
-        console.error("Error unbanning user:", error);
         alert(
           `Failed to unban user: ${
             error.response?.data?.message || error.message || "Unknown error"
@@ -289,16 +284,6 @@ const Users: React.FC = () => {
           <p className="mt-2 text-gray-600">
             Manage and monitor all users in your application
           </p>
-        </div>
-        <div className="flex items-center space-x-4">
-          <button className="flex items-center px-4 py-2 bg-white border border-gray-300 rounded-xl shadow-sm hover:bg-gray-50 transition-colors duration-200">
-            <ChartBarIcon className="h-5 w-5 text-gray-400 mr-2" />
-            <span className="text-sm font-medium text-gray-700">Export</span>
-          </button>
-          <button className="flex items-center px-4 py-2 bg-primary-600 text-white rounded-xl shadow-sm hover:bg-primary-700 transition-colors duration-200">
-            <PlusIcon className="h-5 w-5 mr-2" />
-            <span className="text-sm font-medium">Add User</span>
-          </button>
         </div>
       </div>
 
