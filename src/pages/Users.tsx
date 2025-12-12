@@ -72,7 +72,6 @@ const Users: React.FC = () => {
         setSelectedUser(null);
       },
       onError: (error: any) => {
-        console.error("Error deleting user:", error);
         alert(
           `Failed to delete user: ${
             error.response?.data?.message || error.message || "Unknown error"
@@ -89,7 +88,6 @@ const Users: React.FC = () => {
         queryClient.invalidateQueries("users");
       },
       onError: (error: any) => {
-        console.error("Error banning user:", error);
         alert(
           `Failed to ban user: ${
             error.response?.data?.message || error.message || "Unknown error"
@@ -106,7 +104,6 @@ const Users: React.FC = () => {
         queryClient.invalidateQueries("users");
       },
       onError: (error: any) => {
-        console.error("Error unbanning user:", error);
         alert(
           `Failed to unban user: ${
             error.response?.data?.message || error.message || "Unknown error"
